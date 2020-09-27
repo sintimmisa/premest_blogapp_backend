@@ -14,22 +14,27 @@ const app =express();
 
 //Init Bodyparser middle ware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 
 
 // Connect Database
-connectDB();
+//connectDB();
 
 
-app.use('/', (req,res)=>{
+app.get('/', (req,res)=>{
     res.send('Hello Server');
 });
 
 
 //use Post Router as api/posts
-app.use('/api/posts',posts);
-
+//app.use('/api/posts',posts);
+/*app.post('/users',(req,res)=>{
+    console.log(req.body);
+    res.send(req.body);
+    
+})*/
 
 //Declare PORT
 const PORT = process.env.PORT;

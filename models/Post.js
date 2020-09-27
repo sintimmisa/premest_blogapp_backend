@@ -1,5 +1,5 @@
 //import mongoose
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
 //Setup Post Schema
 const postSchema = new mongoose.Schema({
@@ -19,8 +19,9 @@ const postSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    creation_date:{
-        type:Date
+    date:{
+        type:Date,
+        default:Date.now
     }
 });
 
