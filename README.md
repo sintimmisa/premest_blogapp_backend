@@ -8,4 +8,7 @@
     *Create login.js, signup.js and post.js
     *Import validator(For validation js Objs)  and is empty(checking if a value is empty).
     *Create Validation for login, signup and post
-- Setup Routes and create Api's(need to install bcryt and jwt)
+- Setup Routes and create Api's(need to install bcryt and jwt to handle password hashing and track user sessions) and setup .evn secret 
+    *In the /controller/user dir import all necessary dependancies ie. express,router,bcrpt,jwt,SECRET,usermodel and validation for sigup and login.
+    *Create SignUp Route
+
