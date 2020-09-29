@@ -7,3 +7,5 @@
 - Handle Form Validation: 
     *Create login.js, signup.js and post.js
     *Import validator(For validation js Objs)  and is empty(checking if a value is empty).
+    *Create Validation for login, signup and post
+- Setup Routes and create Api's(need to install bcryt and jwt)
