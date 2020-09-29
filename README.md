@@ -16,4 +16,9 @@
 -Use passportjwt to unable user not to re-authenticate for every request. Passport works with the conncept of strategis. They are basicall middleware functions that a request runs before getting to a route
     * Go to Middle dir, create passsport.js and import required dependancies: 
     *install passport and passportjwt stategy
+    *Create a var/obj to hold jwt token and secret
+    *Pass obj as augument for nJWT Stategy and receive jwt_payload as callback with is and username info
+    *check if user exits and return the user object and if user doesnot exit return user not found
+    *initailize passport in server (index.js /server.js);
+-
 
