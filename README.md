@@ -13,4 +13,7 @@
     *Create SignUp Route
     *Crete Login Route
     *Tell app to see the route in server: app.use()
+-Use passportjwt to unable user not to re-authenticate for every request. Passport works with the conncept of strategis. They are basicall middleware functions that a request runs before getting to a route
+    * Go to Middle dir, create passsport.js and import required dependancies: 
+    *install passport and passportjwt stategy
 

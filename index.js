@@ -1,5 +1,6 @@
 const express =require('express');
 const bodyParser =require('body-parser');
+const passport =require('passport');
 const cors =require('cors');
 require('dotenv').config();
 
@@ -12,6 +13,8 @@ const users=require('./controllers/api/users');
 //initialize express
 const app =express();
 
+//Initailize passport
+app.use(passport.initialize);
 
 //Init Bodyparser middle ware
 app.use(bodyParser.json());
