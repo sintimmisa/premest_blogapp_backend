@@ -9,12 +9,13 @@ const connectDB =require('./database/db');
 //import Router
 const posts=require('./controllers/api/Post');
 const users=require('./controllers/api/users');
-
+require("./middleware/passport")(passport);
 //initialize express
 const app =express();
 
 //Initailize passport
-app.use(passport.initialize);
+app.use(passport.initialize());
+
 
 //Init Bodyparser middle ware
 app.use(bodyParser.json());
@@ -33,14 +34,19 @@ app.get('/', (req,res)=>{
 
 
 //use Post Router as api/posts
-//app.use('/api/posts',posts);
+app.use('/api/posts',posts);
 /*app.post('/users',(req,res)=>{
     console.log(req.body);
     res.send(req.body);
     
 })*/
 
-app.use('/api/user',users);
+app.use('/api/users',users);
+
+app.post("/", (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
+  });
 
 //Declare PORT
 const PORT = process.env.PORT;

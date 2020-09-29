@@ -20,5 +20,8 @@
     *Pass obj as augument for nJWT Stategy and receive jwt_payload as callback with is and username info
     *check if user exits and return the user object and if user doesnot exit return user not found
     *initailize passport in server (index.js /server.js);
--
+- Create Post Api's
+    *import all needed dependancies ie:express,router,passport,validatePostInput,post models
+    *NB: To authenticate / make routes private add the following middleware code : passport.authenticate('jwt,{session:false});
+    *Fetch Post
 

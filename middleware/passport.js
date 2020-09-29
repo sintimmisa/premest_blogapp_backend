@@ -1,15 +1,17 @@
 const jwtStrategy=require('passport-jwt').Strategy;
 const extractJWT=require('passport-jwt').ExtractJwt;
+const SECRET = process.env.SECRET;
 
 const User =require('../models/User');
 
 //jwtToken obj will contain our jwt token and secret key
 
 const jwtToken ={};
-jwtToken.jwtFromRequest =extractJWT.fromAuthHeaderAsBearerToken();
-jwtToken.secret=SECRET;
+jwtToken.jwtFromRequest = extractJWT.fromAuthHeaderAsBearerToken();
+jwtToken.secretOrKey=SECRET;
 
-const passportStrategy=(passport)=>{
+
+module.exports=passport=>{
     // when the jwtToken Obtj is passed in the jwtStrategy, we get jwt_payload in the call back(ie: id and user)
     passport.use(
         new jwtStrategy(jwtToken,(jwt_payload,done)=>{
@@ -30,4 +32,3 @@ const passportStrategy=(passport)=>{
 
 }
 
-module.exports= passport;

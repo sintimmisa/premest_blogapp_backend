@@ -2,18 +2,18 @@ const express =require('express');
 const userRouter =express.Router();
 
 const bcrpt =require('bcryptjs');
-const jwt = require('jasonwebton');
-const User=require('../../models/User');
-const SECRET =process.env.SECRET;
+const jwt = require('jsonwebtoken');
+const USER=require('../../models/User');
+
 
 const validateSignupInput =require('../../validation/SignUp');
 const validateLoginInput =require("../../validation/Login");
-
+const SECRET = process.env.SECRET;
 
 //1. Create SigUp Route
 userRouter.post('/signup',(req,res)=>{
     const {errors,isValid} =validateSignupInput(req.body);
-    const {username,email,password}=req.body;
+    const {user_name,email,password}=req.body;
 /*  Validate user input, if invalid return appropriate error msg
     else search Db for the user with same credentials, if user exist return approprate msg
     otherwise create a newuser, hash the password and store in DB*/
@@ -21,17 +21,17 @@ userRouter.post('/signup',(req,res)=>{
         return res.status(400).json(errors);
     }
 
-    User.findOne({$or:[{email},{username}]}).then(user=>{
+    USER.findOne({$or:[{email},{user_name}]}).then(user=>{
         if(user){
             if(user.email===email)
             return res.status(400).json({email:"Emaill Already exist"});
             else{
-                return res.status(400).json({username:"Username Already exist"});
+                return res.status(400).json({user_name:"Username Already exist"});
             }
            
             } else{
                 //create new user
-                const newUser = new User({username,email,password});
+                const newUser = new USER({user_name,email,password});
                 //hash password and storre in DB
                 bcrpt.genSalt(10,(err,salt)=>{
                     bcrpt.hash(newUser.password,salt,(err,hash)=>{
@@ -39,8 +39,7 @@ userRouter.post('/signup',(req,res)=>{
                         newUser.password=hash;
                         newUser
                         .save()
-                        .then(user=>res.json(user)).
-                        catch(err=>console.log({error:"Error Creating a new user"})
+                        .then((user)=>res.json(user)).catch((err)=>console.log({error:"Error Creating a new user"})
                         );
                     });
                     
@@ -63,16 +62,16 @@ userRouter.post('/signup',(req,res)=>{
             return res.status(400).json(errors);
         }
 
-        User.findOne({username}).then(user=>{
+        USER.findOne({user_name}).then(user=>{
             if(!user){
-                return res.status(404).json({username:"Username not found"});
+                return res.status(404).json({user_name:"Username not found"});
             }
 
             bcrpt.compare(password,user.password).then(isMatch=>{
                 if(isMatch){
                     const payload={
                         id:user.id,
-                        username:user.username
+                        user_name:user.user_name
                     };
                     jwt.sign(payload,SECRET,{expiresIn:3600},(err,token)=>{
                         if(err){

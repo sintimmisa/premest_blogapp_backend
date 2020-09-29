@@ -1,23 +1,21 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
+const userModel = {
+   user_name: {
+      type: String,
+      required: true
+   },
+   email: {
+      type: String,
+      required: true
+   },
+   password: {
+      type: String,
+      required: true
+   }
+};
 
-//Create User Schema
-
-const UserSchema = new mongoose.Schema({
-
-    username:{
-        type:String,
-        required:true
-    },
-    email:{
-        type:String,
-        required:true
-    },
-    pasword:{
-        type:String,
-        required:true
-    }
-});
-
-exports.module = User =mongoose.model('user',UserSchema);// export while assigning to User
+const UserSchema = new Schema(userModel);
+module.exports = mongoose.model("users", UserSchema);
 

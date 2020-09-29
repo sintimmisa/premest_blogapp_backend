@@ -1,43 +1,33 @@
+const Validator = require("validator");
 const isEmpty = require("is-empty");
-const { default: validator } = require("validator");
 
+module.exports = validateSignUpInput = data => {
+   let errors = {};
 
+   let { user_name, email, password } = data;
+   //Converting empty fields to an empty string so that we can use validator function as it works only with strings
+   user_name = !isEmpty(user_name) ? user_name : "";
+   email = !isEmpty(email) ? email : "";
+   password = !isEmpty(password) ? password : "";
 
+   if (Validator.isEmpty(user_name)) {
+      errors.user_name = "Username is required";
+   }
 
+   if (Validator.isEmpty(email)) {
+      errors.email = "Email is required";
+   } else if (!Validator.isEmail(email)) {
+      errors.email = "Enter a valid email id";
+   }
 
+   if (Validator.isEmpty(password)) {
+      errors.password = "Password is required";
+   } else if (!Validator.isLength(password, { min: 6, max: 30 })) {
+      errors.password = "Password must be at least 6 characters";
+   }
 
-const ValidateSigupInput =(data)=>{
-
-    let errors={}
-
-    let {username, email, password}=data;
-
-    username= isEmpty(username)? username:"";
-    email= isEmpty(email)? email:"";
-    password= isEmpty(password)? password:"";
-
-
-    if (Validator.isEmpty(username)){
-
-        errors.username="Username required"
-    }
-
-     if (Validator.isEmpty(email)){
-         errors.email="Email Required"
-
-     }else if(!Validator.isEmail(email)){
-         errors.email="Email is invalid"
-     }
-
-     if (Validator.isEmpty(password)){
-         errors.password="Password required"
-     } else if(Validator.isLenght(password,{min:6,max:30})){
-         errors.password="Email must be at least 6 characters"
-     }
-     return{
-         errors, isValid:isEmpty(errors)
-     };
-
-}
-
-module.exports=ValidateSigupInput;
+   return {
+      errors,
+      isValid: isEmpty(errors)
+   };
+};
