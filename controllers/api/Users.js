@@ -1,11 +1,13 @@
 const express =require('express');
 const userRouter =express.Router();
+
 const bcrpt =require('bcryptjs');
 const jwt = require('jasonwebton');
-const User=require('../models/User');
+const User=require('../../models/User');
 const SECRET =process.env.SECRET;
-const validateSignupInput =require('../validation/SignUp');
-const validateLoginInput =require("../validation/Login");
+
+const validateSignupInput =require('../../validation/SignUp');
+const validateLoginInput =require("../../validation/Login");
 
 
 //1. Create SigUp Route
@@ -47,6 +49,47 @@ userRouter.post('/signup',(req,res)=>{
     });
 
 })
+
+//2. Login Routes
+    userRouter.post('/login',(req,res)=>{
+        const{errors,isValid}=validateLoginInput(req.body);
+        const{username,password} =req.body;
+
+        /*Validate login input. If not valid reture error status
+          if valid but user not found, return error
+          if found  use bcrypt to compare password and return apprioprate msg */
+
+        if(!isValid){
+            return res.status(400).json(errors);
+        }
+
+        User.findOne({username}).then(user=>{
+            if(!user){
+                return res.status(404).json({username:"Username not found"});
+            }
+
+            bcrpt.compare(password,user.password).then(isMatch=>{
+                if(isMatch){
+                    const payload={
+                        id:user.id,
+                        username:user.username
+                    };
+                    jwt.sign(payload,SECRET,{expiresIn:3600},(err,token)=>{
+                        if(err){
+                            console.log(err)
+                        }return res.json(
+                            {
+                                success:true,
+                                token:"Bearer"+token
+                            }
+                        );
+                    });
+                } else{
+                    return res.status(400).json({password:"Password incorrect"})
+                }
+            })
+        })
+    })
 
 
 module.exports=userRouter;

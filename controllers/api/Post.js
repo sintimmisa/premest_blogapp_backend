@@ -2,7 +2,7 @@ const express =require('express');
 const postRouter =express.Router();
 
 //Load POST Model
-const POST =require('../models/Post');
+const POST =require('../../models/Post');
 
 // Route for GET  all postss request
 // @api/posts

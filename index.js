@@ -5,8 +5,9 @@ require('dotenv').config();
 
 const connectDB =require('./database/db');
 
-//import postRouter
-const posts=require('./controllers/Post');
+//import Router
+const posts=require('./controllers/api/Post');
+const users=require('./controllers/api/users');
 
 //initialize express
 const app =express();
@@ -20,7 +21,7 @@ app.use(cors({ origin: true, credentials: true }));
 
 
 // Connect Database
-//connectDB();
+connectDB();
 
 
 app.get('/', (req,res)=>{
@@ -35,6 +36,8 @@ app.get('/', (req,res)=>{
     res.send(req.body);
     
 })*/
+
+app.use('/api/user',users);
 
 //Declare PORT
 const PORT = process.env.PORT;

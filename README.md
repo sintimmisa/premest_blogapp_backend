@@ -11,4 +11,6 @@
 - Setup Routes and create Api's(need to install bcryt and jwt to handle password hashing and track user sessions) and setup .evn secret 
     *In the /controller/user dir import all necessary dependancies ie. express,router,bcrpt,jwt,SECRET,usermodel and validation for sigup and login.
     *Create SignUp Route
+    *Crete Login Route
+    *Tell app to see the route in server: app.use()
 
